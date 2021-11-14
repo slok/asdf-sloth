@@ -1,0 +1,26 @@
+---
+name: CI
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+
+    steps:
+      - name: asdf_plugin_test
+        uses: asdf-vm/actions/plugin-test@v1
+        with:
+          command: "sloth version"
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true # Enabling until there's a better solution.
