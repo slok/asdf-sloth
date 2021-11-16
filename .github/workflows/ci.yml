@@ -6,6 +6,31 @@ on:
   - pull_request
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install asdf
+        uses: asdf-vm/actions/setup@v1
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true # Enabling until there's a better solution.
+
+      - name: Install dependencies
+        run: |
+          set -x
+          asdf plugin add shellcheck && asdf install shellcheck latest && asdf global shellcheck latest
+          asdf plugin add shfmt && asdf install shfmt latest && asdf global shfmt latest
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true # Enabling until there's a better solution.
+
+      - name: Run ShellCheck
+        run: scripts/shellcheck.sh
+
+      - name: Run shfmt
+        run: scripts/shfmt.sh
+
   test:
     runs-on: ${{ matrix.os }}
 

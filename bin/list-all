@@ -11,8 +11,10 @@ fi
 cmd="curl -q ${header} -s ${releases_path}"
 
 function sort_versions() {
-  sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z\1/; s/$/.z/; G; s/\n/ /' | \
+  sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z\1/; s/$/.z/; G; s/\n/ /' |
     LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
 }
 
-echo $(eval "$cmd" | grep -oE "tag_name\": \"v.{1,15}\"," | sed 's/tag_name\": \"v//;s/\",//' | sort_versions)
+versions=$(eval "$cmd" | grep -oE "tag_name\": \"v.{1,15}\"," | sed 's/tag_name\": \"v//;s/\",//' | sort_versions)
+# shellcheck disable=SC2086
+echo ${versions}
