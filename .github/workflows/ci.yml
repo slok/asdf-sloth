@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install asdf
-        uses: asdf-vm/actions/setup@v1
+        uses: asdf-vm/actions/setup@v2
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true # Enabling until there's a better solution.
 
@@ -44,7 +44,7 @@ jobs:
 
     steps:
       - name: asdf_plugin_test
-        uses: asdf-vm/actions/plugin-test@v1
+        uses: asdf-vm/actions/plugin-test@v2
         with:
           command: "sloth version"
         env:
