@@ -30,8 +30,7 @@ install() {
   fi
 
   local download_url
-  download_url="https://github.com/slok/sloth/releases/download/v${version}/sloth-${platform}-${arch}"
-
+  download_url="https://github.com/linode-obs/sloth/releases/download/v${version}/sloth-${platform}-${arch}"
   mkdir -p "${bin_install_path}"
 
   echo "Downloading sloth from ${download_url}"
